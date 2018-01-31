@@ -1,0 +1,44 @@
+buildscript {
+  ext.kotlin_version = '1.2.21'
+
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  }
+}
+
+group 'com.omricat'
+version '0.1'
+
+apply plugin: 'kotlin'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+}
+
+compileKotlin {
+  kotlinOptions.jvmTarget = "1.6"
+}
+compileTestKotlin {
+  kotlinOptions.jvmTarget = "1.6"
+}
+
+apply plugin: 'idea'
+idea {
+  module {
+    downloadJavadoc = true
+    downloadSources = true
+  }
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = "4.4.1"
+  distributionType = Wrapper.DistributionType.ALL
+}
