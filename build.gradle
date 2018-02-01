@@ -9,7 +9,7 @@ buildscript {
   }
 }
 
-group 'com.omricat'
+group 'com.omricat.github'
 version '0.1'
 
 apply plugin: 'kotlin'
