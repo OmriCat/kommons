@@ -4,10 +4,12 @@
 
 # build directory
 build/
+out/
 
 # gradle
 .gradle/
 local.properties
+
 
 # Log file
 *.log
