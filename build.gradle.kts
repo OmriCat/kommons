@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "com.omricat"
-version = "0.4"
+version = "0.5"
 
 plugins {
   kotlin("jvm")
