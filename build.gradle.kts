@@ -1,35 +1,12 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-buildscript {
-  repositories {
-    mavenCentral()
-    jcenter()
-  }
-  dependencies {
-    classpath(Deps.Kotlin.gradlePlugin)
-  }
-}
+group = "com.omricat"
+version = "0.4"
 
 plugins {
-  kotlin("jvm") version Versions.kotlin
-  id(Deps.Build.Nebula.resolutionRules) version Versions.Build.Nebula.resolutionRules
+  kotlin("jvm")
+
   `maven-publish`
-}
-
-repositories {
-  mavenCentral()
-}
-
-dependencies {
-  implementation(kotlin("stdlib"))
-  resolutionRules("com.netflix.nebula:gradle-resolution-rules:0.52.0")
-}
-
-group = "com.omricat"
-version = "0.3.2"
-
-tasks.withType<KotlinCompile> {
-  kotlinOptions.jvmTarget = "1.6"
 }
 
 repositories {
@@ -38,26 +15,19 @@ repositories {
   maven("https://jitpack.io")
 }
 
+dependencies {
+  implementation(Kotlin.stdlib)
 
-val sourcesJar by tasks.creating(Jar::class) {
-  dependsOn(JavaPlugin.CLASSES_TASK_NAME)
-  classifier = "sources"
-  from(java.sourceSets["main"].allSource)
+  testImplementation(Testing.kotest.runner.junit5)
+  testImplementation(Testing.kotest.assertions.core)
 }
 
-val javadocJar by tasks.creating(Jar::class) {
-  dependsOn(JavaPlugin.JAVADOC_TASK_NAME)
-  classifier = "javadoc"
-  from(java.docsDir)
-}
+tasks {
+  withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "1.8"
+  }
 
-
-publishing {
-  (publications) {
-    "mavenJava".invoke(MavenPublication::class) {
-      from(components["java"])
-      artifact(sourcesJar)
-      artifact(javadocJar)
-    }
+  withType<Test> {
+    useJUnitPlatform()
   }
 }
